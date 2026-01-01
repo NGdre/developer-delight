@@ -130,8 +130,31 @@
   @apply mt-12 border-t border-gray-200 pt-8 dark:border-gray-700;
 }
 
-.data-footnote-backref {
+[data-footnote-ref] {
   @apply no-underline;
+}
+
+[data-footnote-ref]::before {
+  content: '[';
+}
+
+[data-footnote-ref]::after {
+  content: ']';
+}
+
+a.data-footnote-backref {
+  color: transparent; /* Hide the default arrow */
+  font-size: 0;
+}
+
+a.data-footnote-backref::before {
+  content: '↑';
+  @apply text-primary-500;
+  font-size: 1rem;
+}
+
+a.data-footnote-backref:hover::before {
+  @apply text-primary-400;
 }
 
 .csl-entry {
