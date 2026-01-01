@@ -10,6 +10,7 @@ import Tag from '@/components/Tag'
 import siteMetadata from '@/data/siteMetadata'
 import tagData from 'app/tag-data.json'
 import TagIcon from '@/components/icons/TagIcon'
+import TagWithCount from '@/components/TagWithCount'
 
 interface PaginationProps {
   totalPages: number
@@ -85,18 +86,7 @@ export default function ListLayoutWithTags({
         <div className="flex flex-wrap">
           {tagKeys.length === 0 && 'No tags found.'}
           {sortedTags.map((t) => {
-            return (
-              <div key={t} className="mt-2 mr-5 mb-2">
-                <Tag text={t} />
-                <Link
-                  href={`/tags/${slug(t)}`}
-                  className="-ml-2 text-sm font-semibold text-gray-600 uppercase dark:text-gray-300"
-                  aria-label={`View posts tagged ${t}`}
-                >
-                  {` (${tagCounts[t]})`}
-                </Link>
-              </div>
-            )
+            return <TagWithCount key={t} text={t} count={tagCounts[t]} />
           })}
         </div>
         <div className="pt-6 pb-2">
