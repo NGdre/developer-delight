@@ -9,6 +9,7 @@ import Link from '@/components/Link'
 import Tag from '@/components/Tag'
 import siteMetadata from '@/data/siteMetadata'
 import tagData from 'app/tag-data.json'
+import TagIcon from '@/components/icons/TagIcon'
 
 interface PaginationProps {
   totalPages: number
@@ -120,20 +121,26 @@ export default function ListLayoutWithTags({
                         </dd>
                       </dl>
                       <div className="space-y-3">
-                        <div>
+                        <div className="space-y-2">
                           <h2 className="text-2xl leading-8 font-bold tracking-tight">
                             <Link href={`/${path}`} className="text-gray-900 dark:text-gray-100">
                               {title}
                             </Link>
                           </h2>
-                          <div className="flex flex-wrap">
-                            {tags?.map((tag) => (
-                              <Tag key={tag} text={tag} />
-                            ))}
+
+                          <div className="prose max-w-none text-gray-500 dark:text-gray-400">
+                            {summary}
                           </div>
                         </div>
-                        <div className="prose max-w-none text-gray-500 dark:text-gray-400">
-                          {summary}
+                        <div className="flex flex-wrap items-center">
+                          {tags.length && (
+                            <span className="mr-2">
+                              <TagIcon />
+                            </span>
+                          )}
+                          {tags?.map((tag) => (
+                            <Tag key={tag} text={tag} />
+                          ))}
                         </div>
                       </div>
                     </article>
