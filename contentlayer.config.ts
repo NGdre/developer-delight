@@ -44,14 +44,7 @@ const icon = fromHtmlIsomorphic(
 
 const computedFields: ComputedFields = {
   readingTime: { type: 'json', resolve: (doc) => readingTime(doc.body.raw) },
-  slug: {
-    type: 'string',
-    resolve: (doc) => doc._raw.flattenedPath.replace(/^.+?(\/)/, ''),
-  },
-  path: {
-    type: 'string',
-    resolve: (doc) => doc._raw.flattenedPath,
-  },
+
   filePath: {
     type: 'string',
     resolve: (doc) => doc._raw.sourceFilePath,
@@ -100,6 +93,7 @@ export const Blog = defineDocumentType(() => ({
   fields: {
     title: { type: 'string', required: true },
     date: { type: 'date', required: true },
+    language: { type: 'string', required: true },
     tags: { type: 'list', of: { type: 'string' }, default: [] },
     lastmod: { type: 'date' },
     draft: { type: 'boolean' },
@@ -112,6 +106,21 @@ export const Blog = defineDocumentType(() => ({
   },
   computedFields: {
     ...computedFields,
+    slug: {
+      type: 'string',
+      resolve: (doc) => {
+        const pathParts = doc._raw.flattenedPath.split('/')
+        return pathParts.slice(2).join('/')
+      },
+    },
+    path: {
+      type: 'string',
+      resolve: (doc) => {
+        const pathParts = doc._raw.flattenedPath.split('/')
+
+        return 'blog' + '/' + pathParts.slice(2).join('/')
+      },
+    },
     structuredData: {
       type: 'json',
       resolve: (doc) => ({
@@ -122,7 +131,7 @@ export const Blog = defineDocumentType(() => ({
         dateModified: doc.lastmod || doc.date,
         description: doc.summary,
         image: doc.images ? doc.images[0] : siteMetadata.socialBanner,
-        url: `${siteMetadata.siteUrl}/${doc._raw.flattenedPath}`,
+        url: `${siteMetadata.siteUrl}/${doc.language}/${doc._raw.flattenedPath}`,
       }),
     },
   },
@@ -134,6 +143,7 @@ export const Authors = defineDocumentType(() => ({
   contentType: 'mdx',
   fields: {
     name: { type: 'string', required: true },
+    language: { type: 'string', required: true },
     avatar: { type: 'string' },
     occupation: { type: 'string' },
     company: { type: 'string' },
@@ -144,7 +154,21 @@ export const Authors = defineDocumentType(() => ({
     github: { type: 'string' },
     layout: { type: 'string' },
   },
-  computedFields,
+  computedFields: {
+    ...computedFields,
+    slug: {
+      type: 'string',
+      resolve: (doc) => {
+        return doc._raw.flattenedPath
+      },
+    },
+    path: {
+      type: 'string',
+      resolve: (doc) => {
+        return doc._raw.flattenedPath
+      },
+    },
+  },
 }))
 
 export default makeSource({

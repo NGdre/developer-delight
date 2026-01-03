@@ -1,6 +1,6 @@
 'use client'
 
-import Link from 'next/link'
+import Link from './Link'
 import { slug } from 'github-slugger'
 import { useState } from 'react'
 
