@@ -11,6 +11,7 @@ const MAX_DISPLAY = 5
 
 export default function Home({ posts, locale }: { posts: any; locale: LocaleTypes }) {
   const t = useTranslations('Home')
+  const tcommon = useTranslations('common')
 
   return (
     <>
@@ -32,7 +33,7 @@ export default function Home({ posts, locale }: { posts: any; locale: LocaleType
                 <article>
                   <div className="space-y-2 xl:grid xl:grid-cols-4 xl:items-baseline xl:space-y-0">
                     <dl>
-                      <dt className="sr-only">{t('publishedOn')}</dt>
+                      <dt className="sr-only">{tcommon('publishedOn')}</dt>
                       <dd className="text-base leading-6 font-medium text-gray-500 dark:text-gray-400">
                         <time dateTime={date}>{formatDate(date, locale)}</time>
                       </dd>

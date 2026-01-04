@@ -13,6 +13,7 @@ import TagIcon from '@/components/icons/TagIcon'
 import TagWithCount from '@/components/TagWithCount'
 import { useParams } from 'next/navigation'
 import { LocaleTypes } from '@/i18n/routing'
+import { useTranslations } from 'next-intl'
 
 interface PaginationProps {
   totalPages: number
@@ -26,6 +27,7 @@ interface ListLayoutProps {
 }
 
 function Pagination({ totalPages, currentPage }: PaginationProps) {
+  const t = useTranslations('pagination')
   const pathname = usePathname()
   const segments = pathname.split('/')
   const lastSegment = segments[segments.length - 1]
@@ -41,7 +43,7 @@ function Pagination({ totalPages, currentPage }: PaginationProps) {
       <nav className="flex justify-between">
         {!prevPage && (
           <button className="cursor-auto disabled:opacity-50" disabled={!prevPage}>
-            Previous
+            {t('previous')}
           </button>
         )}
         {prevPage && (
@@ -49,7 +51,7 @@ function Pagination({ totalPages, currentPage }: PaginationProps) {
             href={currentPage - 1 === 1 ? `/${basePath}/` : `/${basePath}/page/${currentPage - 1}`}
             rel="prev"
           >
-            Previous
+            {t('previous')}
           </Link>
         )}
         <span>
@@ -57,12 +59,12 @@ function Pagination({ totalPages, currentPage }: PaginationProps) {
         </span>
         {!nextPage && (
           <button className="cursor-auto disabled:opacity-50" disabled={!nextPage}>
-            Next
+            {t('next')}
           </button>
         )}
         {nextPage && (
           <Link href={`/${basePath}/page/${currentPage + 1}`} rel="next">
-            Next
+            {t('next')}
           </Link>
         )}
       </nav>
@@ -77,6 +79,7 @@ export default function ListLayoutWithTags({
   pagination,
 }: ListLayoutProps) {
   const { locale } = useParams()
+  const t = useTranslations('common')
   const tagCounts = tagData[locale as LocaleTypes] as Record<string, number>
   const tagKeys = Object.keys(tagCounts)
   const sortedTags = tagKeys.sort((a, b) => tagCounts[b] - tagCounts[a])
@@ -106,10 +109,10 @@ export default function ListLayoutWithTags({
                   <li key={path} className="py-5">
                     <article className="flex flex-col space-y-2 xl:space-y-0">
                       <dl>
-                        <dt className="sr-only">Published on</dt>
+                        <dt className="sr-only">{t('publishedOn')}</dt>
                         <dd className="text-base leading-6 font-medium text-gray-500 dark:text-gray-400">
                           <time dateTime={date} suppressHydrationWarning>
-                            {formatDate(date, siteMetadata.locale)}
+                            {formatDate(date, locale as LocaleTypes)}
                           </time>
                         </dd>
                       </dl>

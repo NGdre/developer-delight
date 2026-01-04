@@ -1,4 +1,7 @@
 {
+  "common": {
+    "publishedOn": "Published on"
+  },
   "theme": {
     "light": "Light",
     "dark": "Dark",
@@ -8,10 +11,13 @@
     "home": "Home",
     "blog": "Blog"
   },
+  "pagination": {
+    "previous": "Previous",
+    "next": "Next"
+  },
   "Home": {
     "latest": "Latest",
     "noPostsFound": "No posts found",
-    "publishedOn": "Published on",
     "readMore": "Read more",
     "allPosts": "All Posts"
   },

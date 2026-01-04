@@ -1,4 +1,7 @@
 {
+  "common": {
+    "publishedOn": "Опубликовано"
+  },
   "theme": {
     "light": "Светлая",
     "dark": "Темная",
@@ -8,10 +11,13 @@
     "home": "Главная",
     "blog": "Блог"
   },
+  "pagination": {
+    "previous": "Предыдущая",
+    "next": "Следующая"
+  },
   "Home": {
     "latest": "Недавние посты",
     "noPostsFound": "Посты не найдены",
-    "publishedOn": "Опубликовано",
     "readMore": "Читать далее",
     "allPosts": "Все посты"
   },
