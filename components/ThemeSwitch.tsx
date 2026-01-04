@@ -11,6 +11,7 @@ import {
   RadioGroup,
   Transition,
 } from '@headlessui/react'
+import { useTranslations } from 'next-intl'
 
 const Sun = () => (
   <svg
@@ -55,6 +56,7 @@ const Monitor = () => (
 const Blank = () => <svg className="h-6 w-6" />
 
 const ThemeSwitch = () => {
+  const t = useTranslations('theme')
   const [mounted, setMounted] = useState(false)
   const { theme, setTheme, resolvedTheme } = useTheme()
 
@@ -78,19 +80,19 @@ const ThemeSwitch = () => {
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <MenuItems className="ring-opacity-5 absolute right-0 z-50 mt-2 w-32 origin-top-right divide-y divide-gray-100 rounded-md bg-white ring-1 shadow-lg ring-black focus:outline-hidden dark:bg-gray-800">
+          <MenuItems className="ring-opacity-5 absolute right-0 z-50 mt-2 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black focus:outline-hidden dark:bg-gray-800">
             <RadioGroup value={theme} onChange={setTheme}>
               <div className="p-1">
                 <Radio value="light">
                   <MenuItem>
                     {({ focus }) => (
                       <button
-                        className={`${focus ? 'bg-primary-600 text-white' : ''} group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                        className={`${focus ? 'bg-primary-600 text-white' : ''} group flex w-full items-center rounded-md py-2 pr-5 pl-2 text-sm`}
                       >
                         <div className="mr-2">
                           <Sun />
                         </div>
-                        Light
+                        {t('light')}
                       </button>
                     )}
                   </MenuItem>
@@ -101,12 +103,12 @@ const ThemeSwitch = () => {
                       <button
                         className={`${
                           focus ? 'bg-primary-600 text-white' : ''
-                        } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                        } group flex w-full items-center rounded-md py-2 pr-5 pl-2 text-sm`}
                       >
                         <div className="mr-2">
                           <Moon />
                         </div>
-                        Dark
+                        {t('dark')}
                       </button>
                     )}
                   </MenuItem>
@@ -117,12 +119,12 @@ const ThemeSwitch = () => {
                       <button
                         className={`${
                           focus ? 'bg-primary-600 text-white' : ''
-                        } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                        } group flex w-full items-center rounded-md py-2 pr-5 pl-2 text-sm`}
                       >
                         <div className="mr-2">
                           <Monitor />
                         </div>
-                        System
+                        {t('system')}
                       </button>
                     )}
                   </MenuItem>
