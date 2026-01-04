@@ -1,4 +1,8 @@
 {
+  "navLink": {
+    "home": "Home",
+    "blog": "Blog"
+  },
   "Home": {
     "latest": "Latest",
     "noPostsFound": "No posts found",

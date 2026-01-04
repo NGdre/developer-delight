@@ -1,8 +1,15 @@
+'use client'
+
 import Link from './Link'
 import siteMetadata from '@/data/siteMetadata'
 import SocialIcon from '@/components/social-icons'
+import { LocaleTypes } from '@/i18n/routing'
+import { useParams } from 'next/navigation'
+import { maintitle } from '@/data/localeMetadata'
 
 export default function Footer() {
+  const locale = useParams()?.locale as LocaleTypes
+
   return (
     <footer>
       <div className="mt-16 flex flex-col items-center">
@@ -15,7 +22,7 @@ export default function Footer() {
           <div>{` • `}</div>
           <div>{`© ${new Date().getFullYear()}`}</div>
           <div>{` • `}</div>
-          <Link href="/">{siteMetadata.title}</Link>
+          <Link href="/">{maintitle[locale]}</Link>
         </div>
       </div>
     </footer>
