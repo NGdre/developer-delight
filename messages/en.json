@@ -5,5 +5,10 @@
     "publishedOn": "Published on",
     "readMore": "Read more",
     "allPosts": "All Posts"
+  },
+  "NotFound": {
+    "title": "Sorry we couldn't find this page.",
+    "description": "But you can alwayes find plenty of other things on our homepage.",
+    "back": "Back to homepage"
   }
 }
