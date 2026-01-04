@@ -12,6 +12,8 @@ import siteMetadata from '@/data/siteMetadata'
 import { ThemeProviders } from './theme-providers'
 import { Metadata } from 'next'
 import { NextIntlClientProvider } from 'next-intl'
+import { LocaleTypes } from '@/i18n/routing'
+import { maindescription, maintitle } from '@/data/localeMetadata'
 
 const primaryFont = Inter({
   subsets: ['latin'],
@@ -19,52 +21,70 @@ const primaryFont = Inter({
   variable: '--primary-font',
 })
 
-export const metadata: Metadata = {
-  metadataBase: new URL(siteMetadata.siteUrl),
-  title: {
-    default: siteMetadata.title,
-    template: `%s | ${siteMetadata.title}`,
-  },
-  description: siteMetadata.description,
-  openGraph: {
-    title: siteMetadata.title,
-    description: siteMetadata.description,
-    url: './',
-    siteName: siteMetadata.title,
-    images: [siteMetadata.socialBanner],
-    locale: 'en_US',
-    type: 'website',
-  },
-  alternates: {
-    canonical: './',
-    types: {
-      'application/rss+xml': `${siteMetadata.siteUrl}/feed.xml`,
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: LocaleTypes }>
+}): Promise<Metadata> {
+  const { locale } = await params
+
+  return {
+    metadataBase: new URL(siteMetadata.siteUrl),
+    title: {
+      default: maintitle[locale],
+      template: `%s | ${maintitle[locale]}`,
     },
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
+    description: maindescription[locale],
+    openGraph: {
+      title: maintitle[locale],
+      description: maindescription[locale],
+      url: './',
+      siteName: maintitle[locale],
+      images: [siteMetadata.socialBanner],
+      locale,
+      type: 'website',
+    },
+    alternates: {
+      canonical: './',
+      types: {
+        'application/rss+xml': `${siteMetadata.siteUrl}/feed.xml`,
+      },
+    },
+    robots: {
       index: true,
       follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
     },
-  },
-  twitter: {
-    title: siteMetadata.title,
-    card: 'summary_large_image',
-    images: [siteMetadata.socialBanner],
-  },
+    twitter: {
+      title: maintitle[locale],
+      description: maindescription[locale],
+      site: siteMetadata.siteUrl,
+      creator: siteMetadata.author,
+      card: 'summary_large_image',
+      images: [siteMetadata.socialBanner],
+    },
+  }
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({
+  children,
+  params,
+}: {
+  children: React.ReactNode
+  params: Promise<{ locale: LocaleTypes }>
+}) {
+  const { locale } = await params
   const basePath = process.env.BASE_PATH || ''
 
   return (
     <html
-      lang={siteMetadata.language}
+      lang={locale}
       className={`${primaryFont.variable} scroll-smooth`}
       suppressHydrationWarning
     >
