@@ -12,5 +12,5 @@ export default async function Page(props: {
   const sortedPosts = sortPosts(allBlogs)
   const posts = allCoreContent(sortedPosts)
   const filteredPosts = posts.filter((post) => post.language === locale)
-  return <Main posts={filteredPosts} />
+  return <Main posts={filteredPosts} locale={locale} />
 }

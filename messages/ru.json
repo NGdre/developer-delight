@@ -1,5 +1,9 @@
 {
-  "HomePage": {
-    "title": "Привет мир!"
+  "Home": {
+    "latest": "Недавние посты",
+    "noPostsFound": "Посты не найдены",
+    "publishedOn": "Опубликовано",
+    "readMore": "Читать далее",
+    "allPosts": "Все посты"
   }
 }

@@ -1,5 +1,9 @@
 {
-  "HomePage": {
-    "title": "Hello world!"
+  "Home": {
+    "latest": "Latest",
+    "noPostsFound": "No posts found",
+    "publishedOn": "Published on",
+    "readMore": "Read more",
+    "allPosts": "All Posts"
   }
 }
