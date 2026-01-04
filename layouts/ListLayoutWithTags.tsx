@@ -8,9 +8,11 @@ import type { Blog } from 'contentlayer/generated'
 import Link from '@/components/Link'
 import Tag from '@/components/Tag'
 import siteMetadata from '@/data/siteMetadata'
-import tagData from 'app/tag-data.json'
+import tagData from 'app/[locale]/tag-data.json'
 import TagIcon from '@/components/icons/TagIcon'
 import TagWithCount from '@/components/TagWithCount'
+import { useParams } from 'next/navigation'
+import { LocaleTypes } from '@/i18n/routing'
 
 interface PaginationProps {
   totalPages: number
@@ -74,7 +76,8 @@ export default function ListLayoutWithTags({
   initialDisplayPosts = [],
   pagination,
 }: ListLayoutProps) {
-  const tagCounts = tagData as Record<string, number>
+  const { locale } = useParams()
+  const tagCounts = tagData[locale as LocaleTypes] as Record<string, number>
   const tagKeys = Object.keys(tagCounts)
   const sortedTags = tagKeys.sort((a, b) => tagCounts[b] - tagCounts[a])
 

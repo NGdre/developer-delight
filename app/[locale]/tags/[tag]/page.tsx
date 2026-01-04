@@ -3,10 +3,10 @@ import { allCoreContent, sortPosts } from 'pliny/utils/contentlayer'
 import siteMetadata from '@/data/siteMetadata'
 import ListLayout from '@/layouts/ListLayoutWithTags'
 import { allBlogs } from 'contentlayer/generated'
-import tagData from 'app/tag-data.json'
+import tagData from 'app/[locale]/tag-data.json'
 import { genPageMetadata } from 'app/[locale]/seo'
 import { Metadata } from 'next'
-import { LocaleTypes } from '@/i18n/routing'
+import { LocaleTypes, routing } from '@/i18n/routing'
 
 const POSTS_PER_PAGE = 5
 
@@ -28,11 +28,21 @@ export async function generateMetadata(props: {
 }
 
 export const generateStaticParams = async () => {
-  const tagCounts = tagData as Record<string, number>
-  const tagKeys = Object.keys(tagCounts)
-  return tagKeys.map((tag) => ({
-    tag: encodeURI(tag),
-  }))
+  const params: { locale: LocaleTypes; tag: string }[] = []
+
+  for (const locale of routing.locales) {
+    const tagCounts = tagData[locale] as Record<string, number>
+    const tagKeys = Object.keys(tagCounts)
+
+    tagKeys.forEach((tag) => {
+      params.push({
+        locale,
+        tag: encodeURI(tag),
+      })
+    })
+  }
+
+  return params
 }
 
 export default async function TagPage(props: {

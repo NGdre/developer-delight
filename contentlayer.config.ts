@@ -56,21 +56,25 @@ const computedFields: ComputedFields = {
  * Count the occurrences of all tags across blog posts and write to json file
  */
 async function createTagCount(allBlogs) {
-  const tagCount: Record<string, number> = {}
+  const tagCount = {
+    en: {},
+    ru: {},
+  }
   allBlogs.forEach((file) => {
     if (file.tags && (!isProduction || file.draft !== true)) {
-      file.tags.forEach((tag) => {
+      file.tags.forEach((tag: string) => {
         const formattedTag = slug(tag)
-        if (formattedTag in tagCount) {
-          tagCount[formattedTag] += 1
-        } else {
-          tagCount[formattedTag] = 1
+
+        if (file.language === 'en') {
+          tagCount.en[formattedTag] = (tagCount.en[formattedTag] || 0) + 1
+        } else if (file.language === 'ru') {
+          tagCount.ru[formattedTag] = (tagCount.ru[formattedTag] || 0) + 1
         }
       })
     }
   })
   const formatted = await prettier.format(JSON.stringify(tagCount, null, 2), { parser: 'json' })
-  writeFileSync('./app/tag-data.json', formatted)
+  writeFileSync('./app/[locale]/tag-data.json', formatted)
 }
 
 function createSearchIndex(allBlogs) {

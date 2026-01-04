@@ -2,22 +2,35 @@ import { slug } from 'github-slugger'
 import { allCoreContent, sortPosts } from 'pliny/utils/contentlayer'
 import ListLayout from '@/layouts/ListLayoutWithTags'
 import { allBlogs } from 'contentlayer/generated'
-import tagData from 'app/tag-data.json'
+import tagData from 'app/[locale]/tag-data.json'
 import { notFound } from 'next/navigation'
-import { LocaleTypes } from '@/i18n/routing'
+import { LocaleTypes, routing } from '@/i18n/routing'
 
 const POSTS_PER_PAGE = 5
 
 export const generateStaticParams = async () => {
-  const tagCounts = tagData as Record<string, number>
-  return Object.keys(tagCounts).flatMap((tag) => {
-    const postCount = tagCounts[tag]
-    const totalPages = Math.max(1, Math.ceil(postCount / POSTS_PER_PAGE))
-    return Array.from({ length: totalPages }, (_, i) => ({
-      tag: encodeURI(tag),
-      page: (i + 1).toString(),
-    }))
-  })
+  const allParams: { locale: LocaleTypes; tag: string; page: string }[] = []
+
+  for (const locale of routing.locales) {
+    const tagCounts = tagData[locale] as Record<string, number>
+
+    if (!tagCounts) continue
+
+    Object.keys(tagCounts).forEach((tag) => {
+      const postCount = tagCounts[tag]
+      const totalPages = Math.max(1, Math.ceil(postCount / POSTS_PER_PAGE))
+
+      for (let page = 1; page <= totalPages; page++) {
+        allParams.push({
+          locale,
+          tag: encodeURI(tag),
+          page: page.toString(),
+        })
+      }
+    })
+  }
+
+  return allParams
 }
 
 export default async function TagPage(props: {
