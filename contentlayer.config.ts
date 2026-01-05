@@ -163,13 +163,16 @@ export const Authors = defineDocumentType(() => ({
     slug: {
       type: 'string',
       resolve: (doc) => {
-        return doc._raw.flattenedPath
+        const pathParts = doc._raw.flattenedPath.split('/')
+        return pathParts.slice(2).join('/')
       },
     },
     path: {
       type: 'string',
       resolve: (doc) => {
-        return doc._raw.flattenedPath
+        const pathParts = doc._raw.flattenedPath.split('/')
+
+        return 'authors' + '/' + pathParts.slice(2).join('/')
       },
     },
   },

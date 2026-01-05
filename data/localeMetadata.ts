@@ -11,3 +11,8 @@ export const maindescription: Metadata = {
   en: "A front-end developer's thoughts on technology, careers, and learning. I share my experience and useful materials.",
   ru: 'Мысли фронтенд-разработчика о технологиях, карьере и обучении. Делюсь своим опытом и полезными материалами.',
 }
+
+export const mainauthor: Metadata = {
+  en: 'Andrei Vasilev',
+  ru: 'Андрей Васильев',
+}

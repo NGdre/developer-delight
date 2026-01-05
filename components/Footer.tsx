@@ -5,7 +5,7 @@ import siteMetadata from '@/data/siteMetadata'
 import SocialIcon from '@/components/social-icons'
 import { LocaleTypes } from '@/i18n/routing'
 import { useParams } from 'next/navigation'
-import { maintitle } from '@/data/localeMetadata'
+import { maintitle, mainauthor } from '@/data/localeMetadata'
 
 export default function Footer() {
   const locale = useParams()?.locale as LocaleTypes
@@ -18,7 +18,7 @@ export default function Footer() {
           <SocialIcon kind="github" href={siteMetadata.github} size={6} />
         </div>
         <div className="mb-2 flex space-x-2 text-sm text-gray-500 dark:text-gray-400">
-          <div>{siteMetadata.author}</div>
+          <div>{mainauthor[locale]}</div>
           <div>{` • `}</div>
           <div>{`© ${new Date().getFullYear()}`}</div>
           <div>{` • `}</div>
