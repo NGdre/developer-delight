@@ -24,6 +24,11 @@
     "editOnGitHub": "Edit on GitHub",
     "backToBlog": "Back to the blog"
   },
+  "search": {
+    "notFound": "No results for \"{searchResult}\"",
+    "loading": "Loading...",
+    "placeholder": "Search articles"
+  },
   "Home": {
     "latest": "Latest",
     "noPostsFound": "No posts found",

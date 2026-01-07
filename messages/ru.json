@@ -24,6 +24,11 @@
     "editOnGitHub": "Редактировать на GitHub",
     "backToBlog": "Вернуться в блог"
   },
+  "search": {
+    "notFound": "Нет результатов для \"{searchResult}\"",
+    "loading": "Загрузка...",
+    "placeholder": "Искать статьи"
+  },
   "Home": {
     "latest": "Недавние посты",
     "noPostsFound": "Посты не найдены",
