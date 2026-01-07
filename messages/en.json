@@ -1,6 +1,9 @@
 {
   "common": {
-    "publishedOn": "Published on"
+    "publishedOn": "Published on",
+    "name": "Name",
+    "authors": "Authors",
+    "tags": "Tags"
   },
   "theme": {
     "light": "Light",
@@ -13,7 +16,13 @@
   },
   "pagination": {
     "previous": "Previous",
-    "next": "Next"
+    "next": "Next",
+    "previousArticle": "Previous Article",
+    "nextArticle": "Next Article"
+  },
+  "post": {
+    "editOnGitHub": "Edit on GitHub",
+    "backToBlog": "Back to the blog"
   },
   "Home": {
     "latest": "Latest",
@@ -23,7 +32,7 @@
   },
   "NotFound": {
     "title": "Sorry we couldn't find this page.",
-    "description": "But you can alwayes find plenty of other things on our homepage.",
+    "description": "But you can always find plenty of other things on our homepage.",
     "back": "Back to homepage"
   }
 }

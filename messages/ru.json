@@ -1,6 +1,9 @@
 {
   "common": {
-    "publishedOn": "Опубликовано"
+    "publishedOn": "Опубликовано",
+    "name": "Имя",
+    "authors": "Авторы",
+    "tags": "Теги"
   },
   "theme": {
     "light": "Светлая",
@@ -13,7 +16,13 @@
   },
   "pagination": {
     "previous": "Предыдущая",
-    "next": "Следующая"
+    "next": "Следующая",
+    "previousArticle": "Предыдущая Статья",
+    "nextArticle": "Следующая Статья"
+  },
+  "post": {
+    "editOnGitHub": "Редактировать на GitHub",
+    "backToBlog": "Вернуться в блог"
   },
   "Home": {
     "latest": "Недавние посты",

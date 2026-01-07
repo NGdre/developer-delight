@@ -85,15 +85,14 @@ export default async function Page(props: {
   const slug = decodeURI(params.slug.join('/'))
   // Filter out drafts in production
   const sortedCoreContents = allCoreContent(sortPosts(allBlogs))
-  const postIndex = sortedCoreContents.findIndex(
-    (p) => p.slug === slug && p.language === params.locale
-  )
+  const filteredPosts = sortedCoreContents.filter((p) => p.language === params.locale)
+  const postIndex = filteredPosts.findIndex((p) => p.slug === slug)
   if (postIndex === -1) {
     return notFound()
   }
 
-  const prev = sortedCoreContents[postIndex + 1]
-  const next = sortedCoreContents[postIndex - 1]
+  const prev = filteredPosts[postIndex + 1]
+  const next = filteredPosts[postIndex - 1]
   const post = allBlogs.find((p) => p.slug === slug && p.language === params.locale) as Blog
   const authorList = post?.authors || ['default']
   const authorDetails = authorList.map((author) => {
