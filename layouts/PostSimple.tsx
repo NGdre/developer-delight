@@ -8,6 +8,9 @@ import PageTitle from '@/components/PageTitle'
 import SectionContainer from '@/components/SectionContainer'
 import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
+import Tag from '@/components/Tag'
+import { useTranslations } from 'next-intl'
+import TagIcon from '@/components/icons/TagIcon'
 
 interface LayoutProps {
   content: CoreContent<Blog>
@@ -17,7 +20,9 @@ interface LayoutProps {
 }
 
 export default function PostLayout({ content, next, prev, children }: LayoutProps) {
-  const { path, slug, date, title } = content
+  const { path, slug, date, title, tags } = content
+
+  const tcommon = useTranslations('common')
 
   return (
     <SectionContainer>
@@ -28,7 +33,7 @@ export default function PostLayout({ content, next, prev, children }: LayoutProp
             <div className="space-y-1 border-b border-gray-200 pb-10 text-center dark:border-gray-700">
               <dl>
                 <div>
-                  <dt className="sr-only">Published on</dt>
+                  <dt className="sr-only">{tcommon('publishedOn')}</dt>
                   <dd className="text-base leading-6 font-medium text-gray-500 dark:text-gray-400">
                     <time dateTime={date}>{formatDate(date, siteMetadata.locale)}</time>
                   </dd>
@@ -49,6 +54,18 @@ export default function PostLayout({ content, next, prev, children }: LayoutProp
               </div>
             )}
             <footer>
+              {tags && (
+                <div className="flex gap-2.5 py-4 xl:py-8">
+                  <h2 className="flex items-center gap-1.5 text-xs tracking-wide text-gray-500 uppercase dark:text-gray-400">
+                    <TagIcon></TagIcon> {tcommon('tags')}:
+                  </h2>
+                  <div className="flex flex-wrap">
+                    {tags.map((tag) => (
+                      <Tag key={tag} text={tag} />
+                    ))}
+                  </div>
+                </div>
+              )}
               <div className="flex flex-col text-sm font-medium sm:flex-row sm:justify-between sm:text-base">
                 {prev && prev.path && (
                   <div className="pt-4 xl:pt-8">
