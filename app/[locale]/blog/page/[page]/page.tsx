@@ -7,8 +7,28 @@ import { LocaleTypes } from '@/i18n/routing'
 const POSTS_PER_PAGE = 5
 
 export const generateStaticParams = async () => {
-  const totalPages = Math.ceil(allBlogs.length / POSTS_PER_PAGE)
-  const paths = Array.from({ length: totalPages }, (_, i) => ({ page: (i + 1).toString() }))
+  const groups: Record<string, typeof allBlogs> = {}
+
+  for (const blog of allBlogs) {
+    if (!groups[blog.language]) {
+      groups[blog.language] = []
+    }
+
+    groups[blog.language].push(blog)
+  }
+
+  const paths: { page: string; locale: string }[] = []
+
+  for (const [language, blogs] of Object.entries(groups)) {
+    const totalPages = Math.ceil(blogs.length / POSTS_PER_PAGE)
+
+    paths.push(
+      ...Array.from({ length: totalPages }, (_, i) => ({
+        page: (i + 1).toString(),
+        locale: language,
+      }))
+    )
+  }
 
   return paths
 }
