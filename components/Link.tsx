@@ -9,6 +9,7 @@ import { AnchorHTMLAttributes } from 'react'
 const CustomLink = ({
   href,
   withoutLocale,
+  locale,
   ...rest
 }: LinkProps & AnchorHTMLAttributes<HTMLAnchorElement> & { withoutLocale?: boolean }) => {
   const isInternalLink = href && href.startsWith('/')
@@ -16,7 +17,10 @@ const CustomLink = ({
 
   if (isInternalLink) {
     if (withoutLocale) return <Link className="break-words" href={href} {...rest} />
-    else return <LocaleLink className="break-words" href={href} {...rest} />
+    else {
+      const localeLinkProps = typeof locale === 'string' ? { ...rest, locale } : rest
+      return <LocaleLink className="break-words" href={href} {...localeLinkProps} />
+    }
   }
 
   if (isAnchorLink) {
