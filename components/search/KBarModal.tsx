@@ -39,7 +39,7 @@ export const KBarModal = ({ actions, isLoading }: { actions: Action[]; isLoading
               </span>
               <KBarSearch
                 defaultPlaceholder={t('placeholder')}
-                className="h-8 w-full bg-transparent text-gray-600 placeholder-gray-400 focus:outline-none dark:text-gray-200 dark:placeholder-gray-500"
+                className="focus:ring-primary-200/80 h-8 w-full rounded-sm border-transparent bg-white p-4 text-gray-600 placeholder-gray-400 focus:border-transparent focus:ring-1 focus:outline-none dark:bg-gray-800 dark:text-gray-200 dark:placeholder-gray-500"
               />
               <kbd className="inline-block rounded border border-gray-400 px-1.5 align-middle text-xs leading-4 font-medium tracking-wide whitespace-nowrap text-gray-400">
                 ESC
