@@ -3,7 +3,8 @@
     "publishedOn": "Опубликовано",
     "name": "Имя",
     "authors": "Авторы",
-    "tags": "Теги"
+    "tags": "Теги",
+    "withTag": "по тегу"
   },
   "theme": {
     "light": "Светлая",

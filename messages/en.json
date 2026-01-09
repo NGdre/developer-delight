@@ -3,7 +3,8 @@
     "publishedOn": "Published on",
     "name": "Name",
     "authors": "Authors",
-    "tags": "Tags"
+    "tags": "Tags",
+    "withTag": "with tag"
   },
   "theme": {
     "light": "Light",

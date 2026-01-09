@@ -3,10 +3,27 @@ import { allBlogs } from 'contentlayer/generated'
 import { genPageMetadata } from 'app/[locale]/seo'
 import ListLayout from '@/layouts/ListLayoutWithTags'
 import { LocaleTypes } from '@/i18n/routing'
+import { Metadata } from 'next'
 
 const POSTS_PER_PAGE = 5
 
-export const metadata = genPageMetadata({ title: 'Blog' })
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: LocaleTypes }>
+}): Promise<Metadata> {
+  const { locale } = await params
+
+  const titles = {
+    en: 'Blog',
+    ru: 'Блог',
+  }
+
+  return genPageMetadata({
+    title: titles[locale],
+    params: { locale },
+  })
+}
 
 export default async function BlogPage(props: {
   params: Promise<{

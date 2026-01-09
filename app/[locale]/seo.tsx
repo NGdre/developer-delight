@@ -1,29 +1,41 @@
-import { Metadata } from 'next'
+import { maindescription, maintitle } from '@/data/localeMetadata'
 import siteMetadata from '@/data/siteMetadata'
+import type { Metadata } from 'next'
+import type { LocaleTypes } from '@/i18n/routing'
 
 interface PageSEOProps {
   title: string
   description?: string
   image?: string
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [key: string]: any
+
+  params: { locale: LocaleTypes }
+  [key: string]: unknown
 }
 
-export function genPageMetadata({ title, description, image, ...rest }: PageSEOProps): Metadata {
+export function genPageMetadata({
+  title,
+  description,
+  image,
+  params: { locale },
+  ...rest
+}: PageSEOProps): Metadata {
   return {
     title,
-    description: description || siteMetadata.description,
+    description: description || maindescription[locale],
     openGraph: {
-      title: `${title} | ${siteMetadata.title}`,
-      description: description || siteMetadata.description,
+      title: `${title} | ${maintitle[locale]}`,
+      description: description || maindescription[locale],
       url: './',
-      siteName: siteMetadata.title,
+      siteName: maintitle[locale],
       images: image ? [image] : [siteMetadata.socialBanner],
-      locale: 'en_US',
+      locale,
       type: 'website',
     },
     twitter: {
-      title: `${title} | ${siteMetadata.title}`,
+      title: `${title} | ${maintitle[locale]}`,
+      description: description ? description : maindescription[locale],
+      site: siteMetadata.siteUrl,
+      creator: siteMetadata.author,
       card: 'summary_large_image',
       images: image ? [image] : [siteMetadata.socialBanner],
     },

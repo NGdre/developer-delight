@@ -14,6 +14,7 @@ import { Metadata } from 'next'
 import siteMetadata from '@/data/siteMetadata'
 import { notFound } from 'next/navigation'
 import { LocaleTypes } from '@/i18n/routing'
+import { mainauthor, maintitle } from '@/data/localeMetadata'
 
 const defaultLayout = 'PostLayout'
 const layouts = {
@@ -23,20 +24,22 @@ const layouts = {
 }
 
 export async function generateMetadata(props: {
-  params: Promise<{ slug: string[] }>
+  params: Promise<{ slug: string[]; locale: LocaleTypes }>
 }): Promise<Metadata | undefined> {
   const params = await props.params
+  const locale = params.locale
   const slug = decodeURI(params.slug.join('/'))
-  const post = allBlogs.find((p) => p.slug === slug)
-  const authorList = post?.authors || ['default']
-  const authorDetails = authorList.map((author) => {
-    const authorResults = allAuthors.find((p) => p.slug === author)
-    return coreContent(authorResults as Authors)
-  })
+  const post = allBlogs.find((p) => p.slug === slug && p.language === locale)
   if (!post) {
     return
   }
-
+  const authorList = post.authors || ['default']
+  const authorDetails = authorList.map((author) => {
+    const authorResults = allAuthors
+      .filter((a) => a.language === locale)
+      .find((a) => a.slug.includes(author))
+    return coreContent(authorResults as Authors)
+  })
   const publishedAt = new Date(post.date).toISOString()
   const modifiedAt = new Date(post.lastmod || post.date).toISOString()
   const authors = authorDetails.map((author) => author.name)
@@ -56,8 +59,8 @@ export async function generateMetadata(props: {
     openGraph: {
       title: post.title,
       description: post.summary,
-      siteName: siteMetadata.title,
-      locale: 'en_US',
+      siteName: maintitle[locale],
+      locale: post.language,
       type: 'article',
       publishedTime: publishedAt,
       modifiedTime: modifiedAt,

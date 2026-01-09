@@ -5,8 +5,35 @@ import { allBlogs } from 'contentlayer/generated'
 import tagData from 'app/[locale]/tag-data.json'
 import { notFound } from 'next/navigation'
 import { LocaleTypes, routing } from '@/i18n/routing'
+import { maintitle } from '@/data/localeMetadata'
+import siteMetadata from '@/data/siteMetadata'
+import { genPageMetadata } from 'app/[locale]/seo'
+import { Metadata } from 'next'
+import { getTranslations } from 'next-intl/server'
 
 const POSTS_PER_PAGE = 5
+
+export async function generateMetadata(props: {
+  params: Promise<{ tag: string; locale: LocaleTypes }>
+}): Promise<Metadata> {
+  const t = await getTranslations('common')
+  const params = await props.params
+  const locale = params.locale
+  const tag = decodeURI(params.tag)
+  return genPageMetadata({
+    title: tag,
+    description: `${maintitle[locale]} ${t('withTag')} ${tag}`,
+    alternates: {
+      canonical: './',
+      types: {
+        'application/rss+xml': `${siteMetadata.siteUrl}/tags/${tag}/feed.xml`,
+      },
+    },
+    params: {
+      locale,
+    },
+  })
+}
 
 export const generateStaticParams = async () => {
   const allParams: { locale: LocaleTypes; tag: string; page: string }[] = []

@@ -3,8 +3,28 @@ import { allCoreContent, sortPosts } from 'pliny/utils/contentlayer'
 import { allBlogs } from 'contentlayer/generated'
 import { notFound } from 'next/navigation'
 import { LocaleTypes } from '@/i18n/routing'
+import { Metadata } from 'next'
+import { genPageMetadata } from 'app/[locale]/seo'
 
 const POSTS_PER_PAGE = 5
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: LocaleTypes }>
+}): Promise<Metadata> {
+  const { locale } = await params
+
+  const titles = {
+    en: 'Blog',
+    ru: 'Блог',
+  }
+
+  return genPageMetadata({
+    title: titles[locale],
+    params: { locale },
+  })
+}
 
 export const generateStaticParams = async () => {
   const groups: Record<string, typeof allBlogs> = {}

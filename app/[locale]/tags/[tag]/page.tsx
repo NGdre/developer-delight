@@ -7,22 +7,29 @@ import tagData from 'app/[locale]/tag-data.json'
 import { genPageMetadata } from 'app/[locale]/seo'
 import { Metadata } from 'next'
 import { LocaleTypes, routing } from '@/i18n/routing'
+import { getTranslations } from 'next-intl/server'
+import { maintitle } from '@/data/localeMetadata'
 
 const POSTS_PER_PAGE = 5
 
 export async function generateMetadata(props: {
-  params: Promise<{ tag: string }>
+  params: Promise<{ tag: string; locale: LocaleTypes }>
 }): Promise<Metadata> {
+  const t = await getTranslations('common')
   const params = await props.params
+  const locale = params.locale
   const tag = decodeURI(params.tag)
   return genPageMetadata({
     title: tag,
-    description: `${siteMetadata.title} ${tag} tagged content`,
+    description: `${maintitle[locale]} ${t('withTag')} ${tag}`,
     alternates: {
       canonical: './',
       types: {
         'application/rss+xml': `${siteMetadata.siteUrl}/tags/${tag}/feed.xml`,
       },
+    },
+    params: {
+      locale,
     },
   })
 }
