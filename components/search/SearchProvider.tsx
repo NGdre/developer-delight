@@ -65,9 +65,11 @@ export function SearchProvider({ children, kbarConfig }: SearchProviderProps) {
   }, [defaultActions, dataLoaded, router, searchDocumentsPath, onSearchDocumentsLoad])
 
   return (
-    <KBarProvider actions={defaultActions}>
-      <KBarModal actions={searchActions} isLoading={!dataLoaded} />
-      {children}
-    </KBarProvider>
+    // <KBarProvider actions={defaultActions}>
+    //   <KBarModal actions={searchActions} isLoading={!dataLoaded} />
+    //   {children}
+    // </KBarProvider>
+
+    <div>{children}</div>
   )
 }

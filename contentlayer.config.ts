@@ -78,16 +78,13 @@ async function createTagCount(allBlogs) {
 }
 
 function createSearchIndex(allBlogs) {
-  if (
-    siteMetadata?.search?.provider === 'kbar' &&
-    siteMetadata.search.kbarConfig.searchDocumentsPath
-  ) {
-    writeFileSync(
-      `public/${path.basename(siteMetadata.search.kbarConfig.searchDocumentsPath)}`,
-      JSON.stringify(allCoreContent(sortPosts(allBlogs)))
-    )
-    console.log('Local search index generated...')
-  }
+  // if (
+  //   siteMetadata?.search?.provider === 'kbar' &&
+  //   siteMetadata.search.kbarConfig.searchDocumentsPath
+  // ) {
+  //   writeFileSync('public/search.json', JSON.stringify(allCoreContent(sortPosts(allBlogs))))
+  //   console.log('Local search index generated...')
+  // }
 }
 
 export const Blog = defineDocumentType(() => ({
