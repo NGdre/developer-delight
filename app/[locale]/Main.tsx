@@ -9,7 +9,13 @@ import { maindescription } from '@/data/localeMetadata'
 
 const MAX_DISPLAY = 5
 
-export default function Home({ posts, locale }: { posts: any; locale: LocaleTypes }) {
+export default function Home({
+  posts,
+  locale,
+}: {
+  posts: any // eslint-disable-line @typescript-eslint/no-explicit-any
+  locale: LocaleTypes
+}) {
   const t = useTranslations('Home')
   const tcommon = useTranslations('common')
 
