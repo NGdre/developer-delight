@@ -39,6 +39,12 @@ const siteMetadata = {
     //   googleAnalyticsId: '', // e.g. G-XXXXXXX
     // },
   },
+  search: {
+    provider: 'kbar',
+    kbarConfig: {
+      searchDocumentsPath: `${process.env.BASE_PATH || ''}/search.json`,
+    },
+  },
   newsletter: {
     // supports mailchimp, buttondown, convertkit, klaviyo, revue, emailoctopus, beehive
     // Please add your .env file and modify it according to your selection
